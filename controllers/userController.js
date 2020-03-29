@@ -12,7 +12,17 @@ const user_get = (req, res) => {
     }))
 }
 
+const user_create = (req, res) => {
+    const { name, email, passwd } = req.body
+    console.log(`Name: ${name}`)
+    console.log(`Email: ${name}`)
+    console.log(`Password: ${name}`)
+
+    res.status(201).end()
+}
+
 module.exports = {
     user_list_get,
     user_get,
+    user_create
 }

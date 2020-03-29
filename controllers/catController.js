@@ -13,7 +13,17 @@ const cat_get = (req, res) => {
     }))
 }
 
+const cat_create = (req, res) => {
+    const { name, age, weight, owner } = req.body
+    console.log(`Name ${name}`)
+    console.log(`Name ${age}`)
+    console.log(`Name ${weight}`)
+    console.log(`Name ${owner}`)
+    res.status(201).end()
+}
+
 module.exports = {
     cat_list_get,
-    cat_get
+    cat_get,
+    cat_create
 }
