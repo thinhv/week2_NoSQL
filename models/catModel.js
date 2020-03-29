@@ -1,10 +1,10 @@
 'use strict';
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 const Schema = mongoose.Schema
 
 const schema = new Schema({
   name: { type: String, required: true },
-  age: { type: Date, max: Date.now, required: true },
+  age: { type: Number, min: 0, required: true },
   gender: { type: String,  enum: ['male', 'female'], required: true },
   color: String,
   weight: Number
@@ -28,5 +28,20 @@ const schema = new Schema({
 //     filename: 'http://placekitten.com/400/302',
 //   },
 // ];
+
+schema.query.byOlderThan = function(age) {
+  if (age === undefined) { return this }
+  return this.where({ age: { $gte: age }})
+}
+
+schema.query.byHeavierThan = function(weight) {
+  if (weight === undefined) { return this }
+  return this.where({ weight: { $gte: weight } })
+}
+
+schema.query.byGender = function(gender) {
+  if (gender === undefined) { return this }
+  return this.where({ gender: gender})
+}
 
 module.exports = mongoose.model('Cat', schema)

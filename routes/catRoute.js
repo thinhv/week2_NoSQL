@@ -19,7 +19,7 @@ router.get('/:id', catController.cat_get)
 
 router.get('/', catController.cat_list_get)
 
-router.post('/', upload.single('cat'), catController.cat_create)
+router.post('/', upload.single('cat'),  catController.cat_create)
 
 router.put('/', (req, res) => {
     res.send('With this endpoint you can edit cats.')

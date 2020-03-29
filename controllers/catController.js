@@ -1,26 +1,31 @@
 'use strict';
-const catModel = require('../models/catModel')
-const cats = catModel.cats;
+const cat = require('../models/catModel')
 
-const cat_list_get = (req, res) => {
-    res.json(cats)
-}
+const cat_list_get = (async (req, res) => {
+    const { weight, age, gender } = req.query
+    return res.json(await cat.find().byHeavierThan(weight).byGender(gender))
+})
 
-const cat_get = (req, res) => {
-    res.json(cats.filter((cat) => {
-        const { id } = req.params.id
-        return cat.id === id
-    }))
-}
+const cat_get = (async (req, res) => {
+    return res.json(await cat.findById(res.params.id))
+})
 
-const cat_create = (req, res) => {
-    const { name, age, weight, owner } = req.body
-    console.log(`Name ${name}`)
-    console.log(`Name ${age}`)
-    console.log(`Name ${weight}`)
-    console.log(`Name ${owner}`)
-    res.status(201).end()
-}
+const cat_create = (async (req, res) => {    
+    const { name, gender, age, weight, color } = req.body
+    try {
+        const createdCat = await cat.create({
+            name,
+            gender,
+            age,
+            weight,
+            color
+        })
+        return res.status(201).json(createdCat)
+    } catch (err) {
+        return res.status(400).json(err)
+    }
+    
+})
 
 module.exports = {
     cat_list_get,
